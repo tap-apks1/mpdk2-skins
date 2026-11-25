@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drum Skin Collection</title>
+  <style>
+    /* =========================================================
+       DESIGN TOKENS & PALET WARNA (CLEAN LIGHT THEME)
+       ========================================================= */
+    :root {
+      --bg-page: #ffffff;
+      --bg-surface: #f3f4f6;
+      --bg-pill: #f1f2f4;
+      --text-primary: #111827;
+      --text-secondary: #6b7280;
+      --accent-orange: #e67e22;
+      --accent-orange-hover: #cf6d17;
+      --accent-border: #d97706;
+      --border-light: #e5e7eb;
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+      line-height: 1.4;
+      padding-bottom: 56px;
+    }
+
+    .app-container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 20px 18px;
+    }
+
+    /* =========================================================
+       HEADER & IKON DEVELOPER SETTINGS
+       ========================================================= */
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .top-header h1 {
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+    }
+
+    .gear-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-primary);
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .gear-btn:hover {
+      background-color: var(--bg-surface);
+    }
+
+    .gear-btn:active {
+      transform: scale(0.94);
+    }
+
+    /* =========================================================
+       KATEGORI TOGGLE (2 MODE ANIMASI)
+       ========================================================= */
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .mode-switcher {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background-color: var(--bg-pill);
+      border-radius: 999px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 18px;
+    }
+
+    .mode-tab {
+      border: 1.5px solid transparent;
+      background: transparent;
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: #374151;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .mode-tab svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .mode-tab.active {
+      background-color: #ffffff;
+      color: var(--text-primary);
+      font-weight: 600;
+      border-color: #d4a373;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* =========================================================
+       BARIS TAB SUB-KATEGORI (HORIZONTAL SCROLL)
+       ========================================================= */
+    .category-scroll {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      scrollbar-width: none;
+    }
+
+    .category-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-item {
+      background: none;
+      border: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      cursor: pointer;
+      padding: 4px 0;
+      transition: color 0.15s ease;
+    }
+
+    .cat-item:hover {
+      color: var(--text-primary);
+    }
+
+    .cat-item.active {
+      color: var(--accent-orange);
+      font-weight: 600;
+    }
+
+    /* =========================================================
+       DAFTAR KARTU SKIN / LATAR (CLEAN VERTICAL FEED)
+       ========================================================= */
+    .skin-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .skin-card {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .image-wrapper {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      background-color: #f3f4f6;
+      border: 1px solid var(--border-light);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Preview khusus komponen PNG transparan agar lebih proporsional */
+    .image-wrapper.is-part {
+      min-height: 150px;
+      max-height: 200px;
+      background-color: #f4f4f6;
+      padding: 16px;
+    }
+
+    .image-wrapper.is-part img {
+      max-height: 155px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    /* Preview penuh untuk latar / full set drum */
+    .image-wrapper.is-full {
+      aspect-ratio: 16 / 9;
+    }
+
+    .image-wrapper.is-full img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Baris Info & Tombol Download di Bawah Gambar */
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      gap: 12px;
+    }
+
+    .meta-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .file-title {
+      font-size: 0.96rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Ikon Tanda Seru (!) */
+    .info-badge {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: var(--accent-orange);
+      color: #ffffff;
+      border: none;
+      font-size: 0.76rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 0.15s ease, background-color 0.15s ease;
+    }
+
+    .info-badge:hover {
+      background-color: var(--accent-orange-hover);
+      transform: scale(1.08);
+    }
+
+    /* Tombol Download */
+    .btn-download {
+      background-color: var(--accent-orange);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      flex-shrink: 0;
+      transition: background-color 0.2s ease, transform 0.15s ease;
+    }
+
+    .btn-download:hover {
+      background-color: var(--accent-orange-hover);
+    }
+
+    .btn-download:active {
+      transform: scale(0.96);
+    }
+
+    .btn-download:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    /* =========================================================
+       FOOTER PAGINATION
+       ========================================================= */
+    .feed-footer {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+    }
+
+    .btn-load-more {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-weight: 600;
+      cursor: pointer;
+      padding: 4px 6px;
+      transition: color 0.15s ease;
+    }
+
+    .btn-load-more:hover {
+      color: var(--accent-orange);
+    }
+
+    /* =========================================================
+       MODAL POP-UP (INFO FILE & DEVELOPER SETTINGS)
+       ========================================================= */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 24, 39, 0.45);
+      backdrop-filter: blur(2px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 100;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: 18px;
+      width: 100%;
+      max-width: 380px;
+      padding: 22px;
+      box-shadow: var(--shadow-md);
+      animation: popIn 0.18s ease-out;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .spec-list {
+      background: var(--bg-surface);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      font-size: 0.88rem;
+      color: #374151;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .spec-row span:first-child {
+      color: var(--text-secondary);
+    }
+
+    .spec-row span:last-child {
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-modal-primary {
+      flex: 1;
+      background: var(--accent-orange);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .btn-modal-secondary {
+      flex: 1;
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-modal-secondary:hover {
+      background-color: #e5e7eb;
+    }
+
+    /* Daftar Tautan Sosial Media & App di Modal Developer */
+    .dev-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .dev-link-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: 12px;
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: 1px solid var(--border-light);
+      transition: transform 0.15s ease, background-color 0.15s ease;
+    }
+
+    .dev-link-item:hover {
+      background-color: #e5e7eb;
+    }
+
+    .dev-link-item:active {
+      transform: scale(0.98);
+    }
+
+    .dev-link-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #ffffff;
+    }
+
+    .dev-app-box {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 12px;
+      padding: 13px 14px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .dev-app-box p {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #7c2d12;
+      margin-bottom: 10px;
+    }
+
+    .btn-mpdk2 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 9px;
+      background-color: var(--accent-orange);
+      color: #ffffff;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-mpdk2:hover {
+      background-color: var(--accent-orange-hover);
+    }
+
+    /* Toast Notification (Pengganti alert) */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #111827;
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s ease;
+      z-index: 200;
+      box-shadow: var(--shadow-md);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="app-container">
+    <!-- HEADER -->
+    <header class="top-header">
+      <h1>Drum Skin Collection</h1>
+      <button class="gear-btn" id="openDevBtn" aria-label="Info Pengembang" title="Info Pengembang">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+    </header>
+
+    <!-- KATEGORI TOGGLE 2 MODE -->
+    <div class="section-label">KATEGORI:</div>
+    <div class="mode-switcher" role="tablist">
+      <button class="mode-tab" id="tabDefault" role="tab" aria-selected="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="14" r="5"></circle>
+          <path d="M5 8h4M15 8h4M7 8v11M17 8v11M4 5l4 2M20 5l-4 2"></path>
+        </svg>
+        <span>Mode Default (1 Set)</span>
+      </button>
+
+      <button class="mode-tab active" id="tabAnim2" role="tab" aria-selected="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <ellipse cx="7" cy="9" rx="4" ry="2"></ellipse>
+          <path d="M3 9v4c0 1.1 1.8 2 4 2s4-.9 4-2V9"></path>
+          <path d="M17 5v14M14 7h6M15 19l2-3 2 3"></path>
+        </svg>
+        <span>Mode Animasi 2 (3D)</span>
+      </button>
+    </div>
+
+    <!-- BARIS FILTER SUB-KATEGORI DINAMIS -->
+    <nav class="category-scroll" id="categoryBar" aria-label="Filter Kategori Skin"></nav>
+
+    <!-- DAFTAR SKIN / LATAR -->
+    <section class="skin-feed" id="skinFeed"></section>
+
+    <!-- FOOTER PAGINATION -->
+    <footer class="feed-footer">
+      <span id="counterText">Showing 0 of 0 results</span> •
+      <button class="btn-load-more" id="loadMoreBtn">Load More</button>
+    </footer>
+  </main>
+
+  <!-- MODAL INFO FILE (!) -->
+  <div class="modal-overlay" id="infoModal">
+    <div class="modal-card">
+      <h3 id="modalFileName">Detail File</h3>
+      <div class="spec-list">
+        <div class="spec-row">
+          <span>Jenis File</span>
+          <span id="modalFileType">PNG (Transparan)</span>
+        </div>
+        <div class="spec-row">
+          <span>Bentuk Aset</span>
+          <span id="modalAssetShape">3D Render</span>
+        </div>
+        <div class="spec-row">
+          <span>Kategori</span>
+          <span id="modalCategory">Closed Hi-Hat</span>
+        </div>
+        <div class="spec-row">
+          <span>Mode MPDK2</span>
+          <span id="modalMode">Mode Animasi 2 (3D)</span>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-modal-secondary" id="closeInfoModal">Tutup</button>
+        <button class="btn-modal-primary" id="modalDownloadBtn">↓ Download</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL INFO PENGEMBANG (Hanya bisa ditutup lewat tombol Tutup) -->
+  <div class="modal-overlay" id="devModal">
+    <div class="modal-card">
+      <h3>Info Pengembang</h3>
+
+      <div class="dev-links">
+        <!-- YouTube -->
+        <a href="https://youtube.com/@nexora_games2026?si=08L--BTTbKdpZywY" target="_blank" rel="noopener noreferrer" class="dev-link-item">
+          <span class="dev-link-icon" style="background-color: #ff0000;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </span>
+          <span>YouTube • @nexora_games2026</span>
+        </a>
+
+        <!-- Telegram -->
+        <a href="https://t.me/nexora_games2026" target="_blank" rel="noopener noreferrer" class="dev-link-item">
+          <span class="dev-link-icon" style="background-color: #229ed9;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+          </span>
+          <span>Telegram • @nexora_games2026</span>
+        </a>
+
+        <!-- TikTok -->
+        <a href="https://www.tiktok.com/@nexora_games2026" target="_blank" rel="noopener noreferrer" class="dev-link-item">
+          <span class="dev-link-icon" style="background-color: #111827;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+            </svg>
+          </span>
+          <span>TikTok • @nexora_games2026</span>
+        </a>
+      </div>
+
+      <!-- Ajakan Singkat Unduh Aplikasi MPDK2 -->
+      <div class="dev-app-box">
+        <p>Belum punya aplikasi MPDK2?</p>
+        <a href="https://sfl.gl/9rqq9B" target="_blank" rel="noopener noreferrer" class="btn-mpdk2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Unduh Aplikasi MPDK2</span>
+        </a>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-modal-secondary" id="closeDevModal">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toastBox">Mengunduh gambar...</div>
+
+  <script>
+    const CATEGORIES_BY_MODE = {
+      default: [
+        "All Sets",
+        "Studio",
+        "Konser",
+        "Akustik",
+        "Metal",
+        "Custom Pad"
+      ],
+      anim2: [
+        "All Skins",
+        "Snare",
+        "Tom 1",
+        "Tom 2",
+        "Floor Tom",
+        "Crash Left",
+        "Splash",
+        "Ride",
+        "Ride Bell",
+        "China",
+        "Crash Right",
+        "Closed Hi-Hat",
+        "Pedal Open Hi-Hat",
+        "Pedal Kick Bass",
+        "Backgrounds"
+      ]
+    };
+
+    const FALLBACK_DATA = [
+      {
+        mode: "anim2",
+        category: "Snare",
+        name: "snare_marble_white",
+        format: "PNG (Transparan)",
+        shape: "3D Component Render",
+        image: "https://placehold.co/600x260/f4f4f6/1f2937?text=SNARE+MARBLE+WHITE+(PNG+3D)"
+      },
+      {
+        mode: "anim2",
+        category: "Tom 1",
+        name: "tom1_concrete_dark",
+        format: "PNG (Transparan)",
+        shape: "3D Component Render",
+        image: "https://placehold.co/800x450/1f2428/f3f4f6?text=TOM+1+CONCRETE+DARK+(PNG+3D)"
+      },
+      {
+        mode: "anim2",
+        category: "Closed Hi-Hat",
+        name: "closed_hihat_herringbone_wood",
+        format: "PNG (Transparan)",
+        shape: "3D Component Render",
+        image: "https://placehold.co/800x450/6b4c35/ffffff?text=CLOSED+HI-HAT+BRONZE+(PNG+3D)"
+      },
+      {
+        mode: "anim2",
+        category: "Closed Hi-Hat",
+        name: "closed_hihat_brilliant_gold",
+        format: "PNG (Transparan)",
+        shape: "3D Component Render",
+        image: "https://placehold.co/600x260/f4f4f6/92400e?text=CLOSED+HI-HAT+BRILLIANT+GOLD+(PNG)"
+      },
+      {
+        mode: "anim2",
+        category: "Pedal Kick Bass",
+        name: "pedal_studio_clean",
+        format: "PNG (Transparan)",
+        shape: "3D Component Render",
+        image: "https://placehold.co/800x450/e5e7eb/111827?text=PEDAL+STUDIO+CLEAN+(PNG+3D)"
+      },
+      {
+        mode: "anim2",
+        category: "Backgrounds",
+        name: "bg_studio_marble_white",
+        format: "JPG (High-Res)",
+        shape: "Latar / Background 2D-3D",
+        image: "https://placehold.co/800x450/d1d5db/111827?text=BACKGROUND+STUDIO+MARBLE+(JPG)"
+      },
+      {
+        mode: "default",
+        category: "Studio",
+        name: "drum_marble_white",
+        format: "JPG (Full Set)",
+        shape: "1 Set Drum Utuh (Mode Default)",
+        image: "https://placehold.co/800x450/e5e7eb/111827?text=FULL+SET+DRUM+MARBLE+WHITE+(JPG)"
+      },
+      {
+        mode: "default",
+        category: "Konser",
+        name: "drum_concrete_dark",
+        format: "JPG (Full Set)",
+        shape: "1 Set Drum Utuh (Mode Default)",
+        image: "https://placehold.co/800x450/18181b/f9fafb?text=FULL+SET+DRUM+CONCRETE+DARK+(JPG)"
+      }
+    ];
+
+    let allItems = [];
+    let activeMode = "anim2";
+    let activeCategory = "All Skins";
+    let itemsLimit = 12;
+    let selectedModalItem = null;
+
+    const tabDefault = document.getElementById("tabDefault");
+    const tabAnim2 = document.getElementById("tabAnim2");
+    const categoryBar = document.getElementById("categoryBar");
+    const skinFeed = document.getElementById("skinFeed");
+    const counterText = document.getElementById("counterText");
+    const loadMoreBtn = document.getElementById("loadMoreBtn");
+    const toastBox = document.getElementById("toastBox");
+
+    async function initCatalog() {
+      try {
+        const res = await fetch(`skins.json?t=${Date.now()}`);
+        if (!res.ok) throw new Error("skins.json belum dibuat");
+        const data = await res.json();
+        allItems = Array.isArray(data) && data.length > 0 ? data : FALLBACK_DATA;
+      } catch (err) {
+        allItems = FALLBACK_DATA;
+      }
+
+      renderCategoryTabs();
+      renderFeed();
+    }
+
+    function setMode(mode) {
+      activeMode = mode;
+      itemsLimit = 12;
+      activeCategory = CATEGORIES_BY_MODE[mode][0];
+
+      tabDefault.classList.toggle("active", mode === "default");
+      tabDefault.setAttribute("aria-selected", mode === "default");
+
+      tabAnim2.classList.toggle("active", mode === "anim2");
+      tabAnim2.setAttribute("aria-selected", mode === "anim2");
+
+      renderCategoryTabs();
+      renderFeed();
+    }
+
+    function renderCategoryTabs() {
+      categoryBar.innerHTML = "";
+      const list = CATEGORIES_BY_MODE[activeMode];
+
+      list.forEach((cat) => {
+        const btn = document.createElement("button");
+        btn.className = "cat-item" + (cat === activeCategory ? " active" : "");
+        btn.textContent = cat;
+        btn.addEventListener("click", () => {
+          activeCategory = cat;
+          itemsLimit = 12;
+          renderCategoryTabs();
+          renderFeed();
+        });
+        categoryBar.appendChild(btn);
+      });
+    }
+
+    function renderFeed() {
+      skinFeed.innerHTML = "";
+
+      const filtered = allItems.filter((item) => {
+        if (item.mode !== activeMode) return false;
+        if (activeCategory === "All Skins" || activeCategory === "All Sets") return true;
+        return item.category.toLowerCase() === activeCategory.toLowerCase();
+      });
+
+      const visibleItems = filtered.slice(0, itemsLimit);
+
+      if (visibleItems.length === 0) {
+        skinFeed.innerHTML = `
+          <div style="text-align:center; padding: 48px 16px; color: #6b7280; font-size: 0.92rem;">
+            Belum ada file di kategori <b>${activeCategory}</b>.
+          </div>
+        `;
+      } else {
+        visibleItems.forEach((item) => {
+          const isPngPart =
+            item.mode === "anim2" &&
+            item.category.toLowerCase() !== "backgrounds" &&
+            item.format.toUpperCase().includes("PNG");
+
+          const card = document.createElement("article");
+          card.className = "skin-card";
+
+          card.innerHTML = `
+            <div class="image-wrapper ${isPngPart ? "is-part" : "is-full"}">
+              <img src="${item.image}" alt="${item.name}" loading="lazy" />
+            </div>
+            <div class="card-meta">
+              <div class="meta-left">
+                <span class="file-title">${item.name}</span>
+                <button class="info-badge" type="button" aria-label="Info Jenis File">!</button>
+              </div>
+              <button class="btn-download" type="button">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Download</span>
+              </button>
+            </div>
+          `;
+
+          card.querySelector(".info-badge").addEventListener("click", () => {
+            openInfoModal(item);
+          });
+
+          const dlBtn = card.querySelector(".btn-download");
+          dlBtn.addEventListener("click", () => {
+            triggerDirectDownload(item, dlBtn);
+          });
+
+          skinFeed.appendChild(card);
+        });
+      }
+
+      counterText.textContent = `Showing ${visibleItems.length} of ${filtered.length} results`;
+      loadMoreBtn.style.display = itemsLimit < filtered.length ? "inline-block" : "none";
+    }
+
+    async function triggerDirectDownload(item, buttonEl) {
+      const ext = item.format.toUpperCase().includes("PNG") ? "png" : "jpg";
+      const fileName = `${item.name}.${ext}`;
+
+      if (buttonEl) buttonEl.disabled = true;
+      showToast(`Mengunduh ${fileName}...`);
+
+      try {
+        const response = await fetch(item.image);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 2000);
+        showToast(`Berhasil mengunduh ${fileName}`);
+      } catch (error) {
+        const link = document.createElement("a");
+        link.href = item.image;
+        link.download = fileName;
+        link.target = "_blank";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      } finally {
+        if (buttonEl) buttonEl.disabled = false;
+      }
+    }
+
+    function openInfoModal(item) {
+      selectedModalItem = item;
+      document.getElementById("modalFileName").textContent = item.name;
+      document.getElementById("modalFileType").textContent = item.format;
+      document.getElementById("modalAssetShape").textContent =
+        item.shape || (item.mode === "anim2" ? "3D Render Component" : "Full Set Layout");
+      document.getElementById("modalCategory").textContent = item.category;
+      document.getElementById("modalMode").textContent =
+        item.mode === "anim2" ? "Mode Animasi 2 (3D)" : "Mode Default (1 Set)";
+      document.getElementById("infoModal").classList.add("open");
+    }
+
+    function showToast(msg) {
+      toastBox.textContent = msg;
+      toastBox.classList.add("show");
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toastBox.classList.remove("show");
+      }, 2600);
+    }
+
+    tabDefault.addEventListener("click", () => setMode("default"));
+    tabAnim2.addEventListener("click", () => setMode("anim2"));
+
+    loadMoreBtn.addEventListener("click", () => {
+      itemsLimit += 12;
+      renderFeed();
+    });
+
+    document.getElementById("closeInfoModal").addEventListener("click", () => {
+      document.getElementById("infoModal").classList.remove("open");
+    });
+
+    document.getElementById("modalDownloadBtn").addEventListener("click", () => {
+      if (selectedModalItem) {
+        triggerDirectDownload(selectedModalItem, null);
+        document.getElementById("infoModal").classList.remove("open");
+      }
+    });
+
+    document.getElementById("openDevBtn").addEventListener("click", () => {
+      document.getElementById("devModal").classList.add("open");
+    });
+
+    document.getElementById("closeDevModal").addEventListener("click", () => {
+      document.getElementById("devModal").classList.remove("open");
+    });
+
+    initCatalog();
+  </script>
+</body>
+</html>
