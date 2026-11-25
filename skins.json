@@ -2,6 +2,14 @@
   {
     "mode": "anim2",
     "category": "Backgrounds",
+    "name": "white_terrazzo",
+    "format": "JPG (Full Set)",
+    "shape": "Rasio 2352x1040px",
+    "image": "assets/anim2/white_terrazzo_1795585628.jpg"
+  },
+  {
+    "mode": "anim2",
+    "category": "Backgrounds",
     "name": "dark_walnut_wood",
     "format": "JPG (Full Set)",
     "shape": "Rasio 2352x1040px",
