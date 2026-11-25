@@ -2,6 +2,14 @@
   {
     "mode": "anim2",
     "category": "Backgrounds",
+    "name": "black_gold_marble",
+    "format": "JPG (Full Set)",
+    "shape": "Rasio 2352x1040px",
+    "image": "assets/anim2/black_gold_marble_1795585528.jpg"
+  },
+  {
+    "mode": "anim2",
+    "category": "Backgrounds",
     "name": "white_tile",
     "format": "JPG (Full Set)",
     "shape": "Rasio 2352x1040px",
