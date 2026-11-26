@@ -1,6 +1,14 @@
 [
   {
     "mode": "default",
+    "category": "Custom Pad",
+    "name": "sunset_pantai_outdoor",
+    "format": "JPG (Full Set)",
+    "shape": "3D Component Render Rasio 2352x1040 pixsel",
+    "image": "assets/default/sunset_pantai_outdoor_1795818532.jpg"
+  },
+  {
+    "mode": "default",
     "category": "Konser",
     "name": "panggung_kayu_hangat_klasik",
     "format": "JPG (Full Set)",
