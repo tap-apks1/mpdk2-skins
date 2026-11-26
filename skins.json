@@ -2,6 +2,14 @@
   {
     "mode": "default",
     "category": "Studio",
+    "name": "studio_silver_chrome_futuristik",
+    "format": "JPG (Full Set)",
+    "shape": "3D Component Render Rasio 2352x1040 pixsel",
+    "image": "assets/default/studio_silver_chrome_futuristik_1795819396.jpg"
+  },
+  {
+    "mode": "default",
+    "category": "Studio",
     "name": "studio_oranye_sunset_hangat",
     "format": "JPG (Full Set)",
     "shape": "3D Component Render Rasio 2352x1040 pixsel",
