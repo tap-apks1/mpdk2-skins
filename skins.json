@@ -1,6 +1,14 @@
 [
   {
     "mode": "default",
+    "category": "Akustik",
+    "name": "sunset_pantai_outdoor",
+    "format": "JPG (Full Set)",
+    "shape": "3D Component Render Rasio 2352x1040 pixsel",
+    "image": "assets/default/sunset_pantai_outdoor_1795817349.jpg"
+  },
+  {
+    "mode": "default",
     "category": "Studio",
     "name": "panggung_kayu_hangat_klasik",
     "format": "JPG (Full Set)",
