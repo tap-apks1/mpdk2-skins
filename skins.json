@@ -2,6 +2,14 @@
   {
     "mode": "default",
     "category": "Akustik",
+    "name": "dinding_graffiti_street_art",
+    "format": "JPG (Full Set)",
+    "shape": "3D Component Render Rasio 2352x1040 pixsel",
+    "image": "assets/default/dinding_graffiti_street_art_1795818679.jpg"
+  },
+  {
+    "mode": "default",
+    "category": "Akustik",
     "name": "studio_gradient_biru",
     "format": "JPG (Full Set)",
     "shape": "3D Component Render Rasio 2352x1040 pixsel",
