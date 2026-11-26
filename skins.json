@@ -1,6 +1,14 @@
 [
   {
     "mode": "default",
+    "category": "Metal",
+    "name": "cyberpunk_neon_pink_cyan",
+    "format": "JPG (Full Set)",
+    "shape": "3D Component Render Rasio 2352x1040 pixsel",
+    "image": "assets/default/cyberpunk_neon_pink_cyan_1795817146.jpg"
+  },
+  {
+    "mode": "default",
     "category": "Konser",
     "name": "panggung_konser_hitam_spotlight_biru_ungu",
     "format": "JPG (Full Set)",
