@@ -1,6 +1,14 @@
 [
   {
     "mode": "default",
+    "category": "Studio",
+    "name": "studio_putih_bersih_minimalis",
+    "format": "JPG (Full Set)",
+    "shape": "3D Component Render Rasio 2352x1040 pixsel",
+    "image": "assets/default/studio_putih_bersih_minimalis_1795818324.jpg"
+  },
+  {
+    "mode": "default",
     "category": "Akustik",
     "name": "hutan_alam_hijau",
     "format": "JPG (Full Set)",
