@@ -2,6 +2,14 @@
   {
     "mode": "default",
     "category": "Studio",
+    "name": "studio_oranye_sunset_hangat",
+    "format": "JPG (Full Set)",
+    "shape": "3D Component Render Rasio 2352x1040 pixsel",
+    "image": "assets/default/studio_oranye_sunset_hangat_1795819311.jpg"
+  },
+  {
+    "mode": "default",
+    "category": "Studio",
     "name": "galaxy_ungu_bintang",
     "format": "JPG (Full Set)",
     "shape": "3D Component Render Rasio 2352x1040 pixsel",
