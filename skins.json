@@ -2,6 +2,14 @@
   {
     "mode": "default",
     "category": "Akustik",
+    "name": "ruang_kayu_walnut_natural",
+    "format": "JPG (Full Set)",
+    "shape": "3D Component Render Rasio 2352x1040 pixsel",
+    "image": "assets/default/ruang_kayu_walnut_natural_1795818999.jpg"
+  },
+  {
+    "mode": "default",
+    "category": "Akustik",
     "name": "studio_biru_navy_sparkle",
     "format": "JPG (Full Set)",
     "shape": "3D Component Render Rasio 2352x1040 pixsel",
