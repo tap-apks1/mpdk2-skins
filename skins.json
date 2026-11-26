@@ -1,6 +1,14 @@
 [
   {
     "mode": "default",
+    "category": "Akustik",
+    "name": "hutan_alam_hijau",
+    "format": "JPG (Full Set)",
+    "shape": "3D Component Render Rasio 2352x1040 pixsel",
+    "image": "assets/default/hutan_alam_hijau_1795817677.jpg"
+  },
+  {
+    "mode": "default",
     "category": "Studio",
     "name": "konser_malam_crowd_bokeh",
     "format": "JPG (Full Set)",
