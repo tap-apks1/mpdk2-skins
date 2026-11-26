@@ -1,5 +1,13 @@
 [
   {
+    "mode": "default",
+    "category": "Studio",
+    "name": "studio_putih_bersih_minimalis",
+    "format": "JPG (Full Set)",
+    "shape": "3D Component Render Rasio 2352x1040 pixsel",
+    "image": "assets/default/studio_putih_bersih_minimalis_1795817039.jpg"
+  },
+  {
     "mode": "anim2",
     "category": "Backgrounds",
     "name": "white_marble_brass_inlay",
