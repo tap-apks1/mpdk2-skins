@@ -2,6 +2,14 @@
   {
     "mode": "default",
     "category": "Akustik",
+    "name": "konser_malam_crowd_bokeh",
+    "format": "JPG (Full Set)",
+    "shape": "3D Component Render Rasio 2352x1040 pixsel",
+    "image": "assets/default/konser_malam_crowd_bokeh_1795818714.jpg"
+  },
+  {
+    "mode": "default",
+    "category": "Akustik",
     "name": "dinding_graffiti_street_art",
     "format": "JPG (Full Set)",
     "shape": "3D Component Render Rasio 2352x1040 pixsel",
