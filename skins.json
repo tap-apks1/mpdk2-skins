@@ -1,6 +1,14 @@
 [
   {
     "mode": "default",
+    "category": "Konser",
+    "name": "panggung_konser_hitam_spotlight_biru_ungu",
+    "format": "JPG (Full Set)",
+    "shape": "3D Component Render Rasio 2352x1040 pixsel",
+    "image": "assets/default/panggung_konser_hitam_spotlight_biru_ungu_1795817093.jpg"
+  },
+  {
+    "mode": "default",
     "category": "Studio",
     "name": "studio_putih_bersih_minimalis",
     "format": "JPG (Full Set)",
